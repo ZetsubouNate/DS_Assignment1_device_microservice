@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DsAssignment1DeviceMicroserviceApplication {
+public class DeviceMicroserviceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DsAssignment1DeviceMicroserviceApplication.class, args);
+        SpringApplication.run(DeviceMicroserviceApplication.class, args);
     }
 
 }
