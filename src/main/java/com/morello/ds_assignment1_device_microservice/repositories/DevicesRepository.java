@@ -8,8 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DevicesRepository extends JpaRepository<Devices, Integer> {
-    List<Devices> findByUserId(Integer userId);
-    List<Devices> findAllByOrderByUserIdAsc();
-    List<Devices> findAllByOrderByNameAsc();
-    List<Devices> findAllByOrderByIdAsc();
+    List<Devices> findByUsername(String username);
+    List<Devices> findByNameContainingOrderById(String devicesName);
+    List<Devices> findAllByOrderByName();
 }

@@ -15,16 +15,54 @@ public class DevicesServiceImpl implements DevicesService{
 
     @Override
     public List<Devices> getAllDevices() {
-        return null;
+        return devicesRepository.findAll();
+    }
+
+    @Override
+    public List<Devices> getAllDevicesByName() {
+        return devicesRepository.findAllByOrderByName();
     }
 
     @Override
     public Optional<Devices> getDeviceById(Integer id) {
-        return Optional.empty();
+        return devicesRepository.findById(id);
     }
 
     @Override
-    public Optional<Devices> getDevicesByName(String name) {
-        return Optional.empty();
+    public List<Devices> getDevicesByName(String name) {
+        return devicesRepository.findByNameContainingOrderById(name);
+    }
+
+    @Override
+    public List<Devices> getDevicesByUser(String username) {
+        return devicesRepository.findByUsername(username);
+    }
+
+    @Override
+    public void addDevice(Devices device) {
+        devicesRepository.save(device);
+    }
+
+    @Override
+    public void updateDevice(Integer id, Devices device) {
+        Optional<Devices> existingDevice = devicesRepository.findById(id);
+        if(existingDevice.isPresent()) {
+            devicesRepository.save(device);
+        }
+    }
+
+    @Override
+    public void updateUsernameForDevices(String username) {
+        List<Devices> devices = devicesRepository.findByUsername(username);
+
+        for (Devices device : devices) {
+            device.setUsername(null);
+            devicesRepository.save(device);
+        }
+    }
+
+    @Override
+    public void deleteDevice(Devices devices) {
+        devicesRepository.delete(devices);
     }
 }
