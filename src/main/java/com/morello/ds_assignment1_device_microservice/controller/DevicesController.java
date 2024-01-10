@@ -3,6 +3,7 @@ package com.morello.ds_assignment1_device_microservice.controller;
 import com.morello.ds_assignment1_device_microservice.entities.Devices;
 import com.morello.ds_assignment1_device_microservice.services.DevicesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,11 +59,26 @@ public class DevicesController {
         }
     }
 
+    @GetMapping("/find/max_energy")
+    public ResponseEntity<Integer> getMaxConsumption(@RequestParam Integer id) {
+        Optional<Devices> device = devicesService.getDeviceById(id);
+        if (device.isPresent()) {
+            return ResponseEntity.ok(device.get().getMaxHourlyEnergyConsumption());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteDevice(@RequestParam Integer id) {
         Optional<Devices> device = devicesService.getDeviceById(id);
 
         if (device.isPresent()) {
+            restTemplate.exchange("http://localhost:8081/api/energy_cons/delete?deviceid={deviceid}",
+                    HttpMethod.DELETE,
+                    null,
+                    Void.class,
+                    id);
             devicesService.deleteDevice(device.get());
             return ResponseEntity.noContent().build();
         } else {
