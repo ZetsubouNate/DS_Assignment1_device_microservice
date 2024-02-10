@@ -27,8 +27,8 @@ public class DevicesController {
         return ResponseEntity.ok(devices);
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<List<Devices>> getUserDevices(@PathVariable String username) {
+    @GetMapping("/username")
+    public ResponseEntity<List<Devices>> getUserDevices(@RequestParam String username) {
         List<Devices> devices = devicesService.getDevicesByUser(username);
         return ResponseEntity.ok(devices);
     }
